@@ -1,0 +1,15 @@
+# Core Dependencies
+streamlit
+faiss-cpu
+sentence-transformers
+transformers
+torch
+
+# PDF Processing
+pymupdf
+
+# Jupyter Notebook (for preprocessing)
+notebook
+
+# Optional (For Hugging Face login if needed)
+huggingface-hub
