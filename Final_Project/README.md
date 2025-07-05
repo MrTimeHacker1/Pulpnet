@@ -38,7 +38,9 @@ cd Pulpnet/Final_Project
 pip install -r requirements.txt
 ```
 
-## Step:3
+## Step:3 Copy the files in the data folder into Final_Project folder
+
+## Step:4
 
 ```bash
 jupyter notebook Data_Loader.ipynb
@@ -46,7 +48,7 @@ jupyter notebook Data_Loader.ipynb
 
 Execute each and every cell of the notebook
 
-## Step:4 Run the app
+## Step:5 Run the app
 
 ```bash
 streamlit run app.py
