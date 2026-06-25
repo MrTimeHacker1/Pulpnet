@@ -14,7 +14,7 @@
 
 ## What is PulpNet?
 
-PulpNet is an **agentic RAG platform** that answers questions about IIT Kanpur institutional knowledge — courses, regulations, faculty, departments, examinations, hostels, calendars, and policies — with responses that are **grounded in retrieved evidence and cited to their source**.
+PulpNet is an **agentic RAG platform** that answers questions about IIT Kanpur institutional knowledge — courses, departments, examinations, hostels, calendars, and policies — with responses that are **grounded in retrieved evidence and cited to their source**.
 
 It is built as a production system, not a demo: provider-agnostic LLMs, hybrid retrieval, staleness-aware metadata, guardrails, semantic caching, and full observability. Every layer is modular, strongly typed, and config-driven.
 
