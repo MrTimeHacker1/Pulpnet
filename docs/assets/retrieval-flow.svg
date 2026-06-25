@@ -1,0 +1,82 @@
+<svg viewBox="0 0 1200 520" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="rbg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1420"/><stop offset="1" stop-color="#0c1019"/>
+    </linearGradient>
+    <linearGradient id="racc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c6cff"/><stop offset="1" stop-color="#39d3bb"/>
+    </linearGradient>
+    <marker id="rarrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#5a6688"/>
+    </marker>
+    <marker id="racc-arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#39d3bb"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="520" fill="url(#rbg)"/>
+  <text x="40" y="50" font-size="26" font-weight="800" fill="#ffffff" letter-spacing="-0.5">Hybrid Retrieval Pipeline</text>
+  <text x="40" y="76" font-size="14" fill="#8a95b3">Dense and sparse search fused with RRF, re-ranked by a cross-encoder, expanded small-to-big</text>
+  <rect x="40" y="90" width="120" height="3" rx="1.5" fill="url(#racc)"/>
+
+  <!-- Query -->
+  <rect x="40" y="220" width="150" height="64" rx="12" fill="#21304f" stroke="#3a4a78"/>
+  <text x="115" y="248" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">Query</text>
+  <text x="115" y="268" text-anchor="middle" font-size="11.5" fill="#9fb0d4">rewritten + filtered</text>
+
+  <!-- Embed -->
+  <rect x="240" y="220" width="150" height="64" rx="12" fill="#161d2e" stroke="#2c3654"/>
+  <text x="315" y="242" text-anchor="middle" font-size="14" font-weight="700" fill="#e6ebf7">Embed Query</text>
+  <text x="315" y="261" text-anchor="middle" font-size="11" fill="#7e89a8">e5-large · query: prefix</text>
+  <text x="315" y="276" text-anchor="middle" font-size="11" fill="#7e89a8">+ SPLADE sparse</text>
+
+  <!-- Dense branch -->
+  <rect x="450" y="150" width="180" height="58" rx="11" fill="#161d2e" stroke="#34406a"/>
+  <text x="540" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#7c6cff">Dense Search</text>
+  <text x="540" y="193" text-anchor="middle" font-size="11" fill="#8893b2">cosine ANN · top-20</text>
+
+  <!-- Sparse branch -->
+  <rect x="450" y="296" width="180" height="58" rx="11" fill="#161d2e" stroke="#34406a"/>
+  <text x="540" y="320" text-anchor="middle" font-size="14" font-weight="700" fill="#39d3bb">Sparse Search</text>
+  <text x="540" y="339" text-anchor="middle" font-size="11" fill="#8893b2">SPLADE lexical · top-20</text>
+
+  <!-- RRF -->
+  <rect x="690" y="220" width="150" height="64" rx="12" fill="#161d2e" stroke="#2c3654"/>
+  <text x="765" y="244" text-anchor="middle" font-size="14" font-weight="700" fill="#e6ebf7">RRF Fusion</text>
+  <text x="765" y="263" text-anchor="middle" font-size="11" fill="#7e89a8">k = 60 · rank-based</text>
+
+  <!-- Re-rank -->
+  <rect x="900" y="220" width="150" height="64" rx="12" fill="#161d2e" stroke="#2c3654"/>
+  <text x="975" y="244" text-anchor="middle" font-size="14" font-weight="700" fill="#e6ebf7">Cross-Encoder</text>
+  <text x="975" y="263" text-anchor="middle" font-size="11" fill="#7e89a8">MiniLM re-rank</text>
+
+  <!-- Output -->
+  <rect x="1060" y="220" width="100" height="64" rx="12" fill="#21304f" stroke="#3a4a78"/>
+  <text x="1110" y="248" text-anchor="middle" font-size="14" font-weight="700" fill="#39d3bb">Top-k</text>
+  <text x="1110" y="267" text-anchor="middle" font-size="11" fill="#9fb0d4">context</text>
+
+  <!-- arrows -->
+  <g stroke="#5a6688" stroke-width="1.8" fill="none" marker-end="url(#rarrow)">
+    <line x1="190" y1="252" x2="238" y2="252"/>
+    <path d="M390 240 Q420 240 420 179 L448 179"/>
+    <path d="M390 264 Q420 264 420 325 L448 325"/>
+    <path d="M630 179 Q660 179 660 240 L688 240"/>
+    <path d="M630 325 Q660 325 660 264 L688 264"/>
+    <line x1="840" y1="252" x2="898" y2="252"/>
+  </g>
+  <line x1="1050" y1="252" x2="1058" y2="252" stroke="#39d3bb" stroke-width="1.8" marker-end="url(#racc-arrow)"/>
+
+  <!-- small-to-big expansion -->
+  <rect x="690" y="380" width="470" height="92" rx="12" fill="#13192a" stroke="#283353"/>
+  <text x="710" y="406" font-size="13" font-weight="700" fill="#7c6cff" letter-spacing="1">SMALL-TO-BIG EXPANSION</text>
+  <text x="710" y="430" font-size="12.5" fill="#aab4cf">Retrieve precise 512-token child chunks, then expand each to its</text>
+  <text x="710" y="450" font-size="12.5" fill="#aab4cf">2048-token parent before synthesis — precision in, full context out.</text>
+  <line x1="1110" y1="284" x2="1110" y2="340" stroke="#5a6688" stroke-width="1.6"/>
+  <path d="M1110 340 Q1110 379 925 379" stroke="#5a6688" stroke-width="1.6" fill="none" marker-end="url(#rarrow)"/>
+
+  <!-- metadata filter note -->
+  <rect x="40" y="380" width="620" height="92" rx="12" fill="#13192a" stroke="#283353"/>
+  <text x="60" y="406" font-size="13" font-weight="700" fill="#39d3bb" letter-spacing="1">METADATA FILTERING</text>
+  <text x="60" y="430" font-size="12.5" fill="#aab4cf">Filters apply to the dense branch payload: department, document_type,</text>
+  <text x="60" y="450" font-size="12.5" fill="#aab4cf">course_code, and document_year (range) — e.g. exclude is_outdated content.</text>
+</svg>

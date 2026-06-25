@@ -1,0 +1,61 @@
+<svg viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d1117"/>
+      <stop offset="0.55" stop-color="#141b2d"/>
+      <stop offset="1" stop-color="#1a1340"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c6cff"/>
+      <stop offset="1" stop-color="#39d3bb"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#7c6cff" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#7c6cff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="320" fill="url(#bg)"/>
+
+  <!-- subtle node-graph motif on the right -->
+  <g opacity="0.5">
+    <circle cx="980" cy="90" r="320" fill="url(#glow)"/>
+  </g>
+  <g stroke="#2b3550" stroke-width="1.2" fill="none" opacity="0.8">
+    <path d="M860 80 L960 130 L1060 95 M960 130 L1010 210 M960 130 L900 200 M1060 95 L1120 160"/>
+  </g>
+  <g fill="#39d3bb">
+    <circle cx="860" cy="80" r="4"/>
+    <circle cx="1060" cy="95" r="4"/>
+    <circle cx="1010" cy="210" r="4"/>
+    <circle cx="900" cy="200" r="4"/>
+    <circle cx="1120" cy="160" r="4"/>
+  </g>
+  <circle cx="960" cy="130" r="7" fill="#7c6cff"/>
+
+  <!-- wordmark -->
+  <text x="80" y="150" font-size="76" font-weight="800" fill="#ffffff" letter-spacing="-2">PulpNet<tspan fill="url(#accent)"> v2</tspan></text>
+  <text x="84" y="196" font-size="23" font-weight="500" fill="#aab4cf" letter-spacing="0.5">Production-grade Agentic RAG for IIT Kanpur institutional knowledge</text>
+
+  <!-- tag chips -->
+  <g font-size="14" font-weight="600">
+    <g>
+      <rect x="84" y="228" width="160" height="34" rx="17" fill="#1c2740" stroke="#2f3c5c"/>
+      <text x="164" y="250" text-anchor="middle" letter-spacing="0.3"><tspan fill="#c8d2ea">Hybrid Retrieval</tspan></text>
+    </g>
+    <g>
+      <rect x="256" y="228" width="128" height="34" rx="17" fill="#1c2740" stroke="#2f3c5c"/>
+      <text x="320" y="250" text-anchor="middle" letter-spacing="0.3"><tspan fill="#c8d2ea">LangGraph</tspan></text>
+    </g>
+    <g>
+      <rect x="396" y="228" width="166" height="34" rx="17" fill="#1c2740" stroke="#2f3c5c"/>
+      <text x="479" y="250" text-anchor="middle" letter-spacing="0.3"><tspan fill="#c8d2ea">Grounded + Cited</tspan></text>
+    </g>
+    <g>
+      <rect x="574" y="228" width="180" height="34" rx="17" fill="#1c2740" stroke="#2f3c5c"/>
+      <text x="664" y="250" text-anchor="middle" letter-spacing="0.3"><tspan fill="#c8d2ea">Provider-agnostic</tspan></text>
+    </g>
+  </g>
+
+  <rect x="80" y="288" width="460" height="3" rx="1.5" fill="url(#accent)"/>
+</svg>

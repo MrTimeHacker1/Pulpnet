@@ -1,0 +1,96 @@
+<svg viewBox="0 0 1200 480" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="ibg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0f1420"/><stop offset="1" stop-color="#0c1019"/>
+    </linearGradient>
+    <linearGradient id="iacc" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7c6cff"/><stop offset="1" stop-color="#39d3bb"/>
+    </linearGradient>
+    <marker id="iarrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#5a6688"/>
+    </marker>
+  </defs>
+
+  <rect width="1200" height="480" fill="url(#ibg)"/>
+  <text x="40" y="50" font-size="26" font-weight="800" fill="#ffffff" letter-spacing="-0.5">Ingestion Pipeline</text>
+  <text x="40" y="76" font-size="14" fill="#8a95b3">Trusted sources become clean, dated, embedded chunks — web pages and PDFs share one path</text>
+  <rect x="40" y="90" width="120" height="3" rx="1.5" fill="url(#iacc)"/>
+
+  <!-- Two sources merging -->
+  <rect x="40" y="140" width="170" height="56" rx="11" fill="#161d2e" stroke="#34406a"/>
+  <text x="125" y="164" text-anchor="middle" font-size="14" font-weight="700" fill="#7c6cff">Websites</text>
+  <text x="125" y="182" text-anchor="middle" font-size="11" fill="#8893b2">Playwright + Trafilatura</text>
+
+  <rect x="40" y="232" width="170" height="56" rx="11" fill="#161d2e" stroke="#34406a"/>
+  <text x="125" y="256" text-anchor="middle" font-size="14" font-weight="700" fill="#39d3bb">PDFs</text>
+  <text x="125" y="274" text-anchor="middle" font-size="11" fill="#8893b2">download + PyMuPDF</text>
+
+  <!-- Stage boxes -->
+  <g>
+    <rect x="270" y="186" width="150" height="56" rx="11" fill="#161d2e" stroke="#2c3654"/>
+    <text x="345" y="210" text-anchor="middle" font-size="13.5" font-weight="700" fill="#e6ebf7">Clean</text>
+    <text x="345" y="228" text-anchor="middle" font-size="11" fill="#7e89a8">strip nav / image junk</text>
+
+    <rect x="450" y="186" width="160" height="56" rx="11" fill="#161d2e" stroke="#2c3654"/>
+    <text x="530" y="210" text-anchor="middle" font-size="13.5" font-weight="700" fill="#e6ebf7">Enrich</text>
+    <text x="530" y="228" text-anchor="middle" font-size="11" fill="#7e89a8">dept + year detection</text>
+
+    <rect x="640" y="186" width="170" height="56" rx="11" fill="#161d2e" stroke="#2c3654"/>
+    <text x="725" y="210" text-anchor="middle" font-size="13.5" font-weight="700" fill="#e6ebf7">Chunk</text>
+    <text x="725" y="228" text-anchor="middle" font-size="11" fill="#7e89a8">recursive · parent/child</text>
+
+    <rect x="840" y="186" width="150" height="56" rx="11" fill="#161d2e" stroke="#2c3654"/>
+    <text x="915" y="210" text-anchor="middle" font-size="13.5" font-weight="700" fill="#e6ebf7">Embed</text>
+    <text x="915" y="228" text-anchor="middle" font-size="11" fill="#7e89a8">dense + sparse</text>
+
+    <rect x="1020" y="186" width="140" height="56" rx="11" fill="#21304f" stroke="#3a4a78"/>
+    <text x="1090" y="210" text-anchor="middle" font-size="13.5" font-weight="700" fill="#39d3bb">Index</text>
+    <text x="1090" y="228" text-anchor="middle" font-size="11" fill="#9fb0d4">Qdrant + Postgres</text>
+  </g>
+
+  <!-- merge arrows -->
+  <g stroke="#5a6688" stroke-width="1.8" fill="none" marker-end="url(#iarrow)">
+    <path d="M210 168 Q245 168 245 208 L268 208"/>
+    <path d="M210 260 Q245 260 245 220 L268 220"/>
+    <line x1="420" y1="214" x2="448" y2="214"/>
+    <line x1="610" y1="214" x2="638" y2="214"/>
+    <line x1="810" y1="214" x2="838" y2="214"/>
+    <line x1="990" y1="214" x2="1018" y2="214"/>
+  </g>
+
+  <!-- metadata footer -->
+  <rect x="40" y="330" width="1120" height="118" rx="12" fill="#13192a" stroke="#283353"/>
+  <text x="60" y="358" font-size="13" font-weight="700" fill="#7c6cff" letter-spacing="1">CHUNK METADATA (stored as Qdrant payload, filterable at query time)</text>
+  <g font-size="12" font-weight="600">
+    <g>
+      <rect x="60" y="374" width="150" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="135" y="392" text-anchor="middle" fill="#c8d2ea">source_url</text>
+      <rect x="222" y="374" width="140" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="292" y="392" text-anchor="middle" fill="#c8d2ea">department</text>
+      <rect x="374" y="374" width="150" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="449" y="392" text-anchor="middle" fill="#c8d2ea">document_type</text>
+      <rect x="536" y="374" width="150" height="28" rx="14" fill="#21304f" stroke="#3a4a78"/>
+      <text x="611" y="392" text-anchor="middle" fill="#39d3bb">document_year</text>
+      <rect x="698" y="374" width="130" height="28" rx="14" fill="#21304f" stroke="#3a4a78"/>
+      <text x="763" y="392" text-anchor="middle" fill="#39d3bb">is_outdated</text>
+      <rect x="840" y="374" width="140" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="910" y="392" text-anchor="middle" fill="#c8d2ea">course_code</text>
+      <rect x="992" y="374" width="120" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="1052" y="392" text-anchor="middle" fill="#c8d2ea">checksum</text>
+    </g>
+    <g>
+      <rect x="60" y="410" width="130" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="125" y="428" text-anchor="middle" fill="#c8d2ea">parent_id</text>
+      <rect x="202" y="410" width="140" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="272" y="428" text-anchor="middle" fill="#c8d2ea">chunk_index</text>
+      <rect x="354" y="410" width="140" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="424" y="428" text-anchor="middle" fill="#c8d2ea">token_count</text>
+      <rect x="506" y="410" width="160" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="586" y="428" text-anchor="middle" fill="#c8d2ea">crawl_timestamp</text>
+      <rect x="678" y="410" width="110" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="733" y="428" text-anchor="middle" fill="#c8d2ea">title</text>
+      <rect x="800" y="410" width="120" height="28" rx="14" fill="#1b2540" stroke="#2f3c5c"/>
+      <text x="860" y="428" text-anchor="middle" fill="#c8d2ea">faculty</text>
+    </g>
+  </g>
+</svg>
