@@ -5,8 +5,6 @@
     </marker>
   </defs>
 
-  <rect width="920" height="830" fill="#0d0d0f"/>
-
   <!-- ============ DATA LAYER (teal/green) ============ -->
   <g>
     <rect x="150" y="30" width="640" height="120" rx="10" fill="#0f6b54"/>
