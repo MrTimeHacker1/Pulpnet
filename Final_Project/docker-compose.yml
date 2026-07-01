@@ -1,0 +1,138 @@
+# Full dockerized IITK Agentic RAG stack: app + ingestion + eval + backends.
+#
+#   docker compose up --build            # backends → ingest (one-shot) → API on :8000
+#   docker compose --profile eval run --rm eval   # run RAGAS evaluation
+#
+# The `ingest` job runs once and populates Qdrant + Postgres + the retrieval
+# snapshot (on the shared `artifacts` volume); the `app` waits for it to finish,
+# then serves. Model weights are cached on the shared `hf_cache` volume so they
+# download only once across ingest/app/eval.
+#
+# Fast smoke test without loading the ~GB Gemma model:
+#   GENERATOR_MODEL=mock docker compose up --build
+#
+# GPU: install the NVIDIA Container Toolkit and uncomment the `deploy` block on
+# the app/ingest/eval services; MODEL_DEVICE=auto then uses the GPU.
+
+x-app-env: &app-env
+  QDRANT_URL: http://qdrant:6333
+  QDRANT_COLLECTION: iitk_rag
+  DB_URL: postgresql+psycopg://rag:rag@postgres:5432/iitk_rag
+  REDIS_URL: redis://redis:6379/0
+  RETRIEVAL_SNAPSHOT: /app/artifacts/retrieval_snapshot.pkl
+  HF_HOME: /app/hf_cache
+  MODEL_DEVICE: ${MODEL_DEVICE:-auto}
+  GENERATOR_MODEL: ${GENERATOR_MODEL:-google/gemma-4-E4B-it}
+  HF_TOKEN: ${HF_TOKEN:-}
+  LOG_LEVEL: ${LOG_LEVEL:-INFO}
+
+x-app-volumes: &app-volumes
+  - artifacts:/app/artifacts
+  - hf_cache:/app/hf_cache
+
+services:
+  qdrant:
+    image: qdrant/qdrant:v1.12.4
+    container_name: iitk_rag_qdrant
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: iitk_rag_postgres
+    environment:
+      POSTGRES_USER: rag
+      POSTGRES_PASSWORD: rag
+      POSTGRES_DB: iitk_rag
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag -d iitk_rag"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: iitk_rag_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # One-shot ingestion: parse PDFs → embed → Qdrant + Postgres + snapshot.
+  ingest:
+    build: .
+    image: iitk-rag:latest
+    container_name: iitk_rag_ingest
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+    environment: *app-env
+    volumes: *app-volumes
+    command: ["python", "-m", "ingestion.run_ingestion"]
+    restart: "no"
+    # GPU (optional):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices: [{driver: nvidia, count: all, capabilities: [gpu]}]
+
+  # API server (waits for ingestion to complete successfully).
+  app:
+    build: .
+    image: iitk-rag:latest
+    container_name: iitk_rag_app
+    depends_on:
+      ingest:
+        condition: service_completed_successfully
+      redis:
+        condition: service_started
+    environment: *app-env
+    volumes: *app-volumes
+    ports:
+      - "8000:8000"
+    command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    restart: unless-stopped
+    # GPU (optional):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices: [{driver: nvidia, count: all, capabilities: [gpu]}]
+
+  # RAGAS evaluation (reference-free). Run on demand:
+  #   docker compose --profile eval run --rm eval
+  eval:
+    build: .
+    image: iitk-rag:latest
+    container_name: iitk_rag_eval
+    profiles: ["eval"]
+    depends_on:
+      ingest:
+        condition: service_completed_successfully
+    environment: *app-env
+    volumes: *app-volumes
+    command: ["python", "-m", "eval.ragas_eval", "--limit", "5"]
+    restart: "no"
+    # GPU (optional):
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices: [{driver: nvidia, count: all, capabilities: [gpu]}]
+
+volumes:
+  qdrant_data:
+  postgres_data:
+  redis_data:
+  hf_cache:
+  artifacts:

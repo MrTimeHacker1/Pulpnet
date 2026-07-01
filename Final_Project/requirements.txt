@@ -1,15 +1,52 @@
-# Core Dependencies
-streamlit
-faiss-cpu
-sentence-transformers
-transformers
-torch
+# IITK Agentic RAG — pinned to versions verified installed in the `bharat` conda env (Python 3.13).
+# After install: run `pip check` to confirm no conflicts.
 
-# PDF Processing
-pymupdf
+# --- API ---
+fastapi==0.138.2
+uvicorn==0.49.0
+python-dotenv==1.2.2
 
-# Jupyter Notebook (for preprocessing)
-notebook
+# --- Config / validation ---
+pydantic==2.12.5
+pydantic-settings==2.14.2
 
-# Optional (For Hugging Face login if needed)
-huggingface-hub
+# --- Persistence ---
+SQLAlchemy==2.0.48
+# Postgres driver (prod). Dev defaults to SQLite (stdlib), so this is only needed
+# when DB_URL points at Postgres. Install may require libpq headers.
+psycopg[binary]==3.2.3
+
+# --- Vector store / cache ---
+qdrant-client==1.18.0
+redis==8.0.1
+
+# --- Retrieval ---
+rank-bm25==0.2.2
+sentence-transformers==5.6.0
+
+# --- Agent ---
+langgraph==1.2.7
+langchain-core==1.4.8
+
+# --- LLM / models ---
+transformers==5.12.1
+# Stable torch with Python 3.13 wheels; satisfies transformers' torch>=2.4 floor.
+# (The dev box happened to have 2.12.1; 2.6.0 is the stable pin for clean builds.)
+torch==2.6.0
+accelerate==1.14.0
+huggingface-hub==1.21.0
+
+# --- PDF parsing ---
+pdfplumber==0.11.10
+pypdf==6.14.2
+
+# --- Eval ---
+ragas==0.4.3
+datasets==4.5.0
+
+# --- Scientific ---
+numpy==2.4.1
+scikit-learn==1.8.0
+
+# --- Dev / test ---
+pytest==9.1.1

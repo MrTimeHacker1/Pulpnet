@@ -1,0 +1,18 @@
+# Keep the build context small and free of host-specific artifacts.
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.gitignore
+.pytest_cache/
+.ruff_cache/
+
+# Host-generated artifacts (regenerated inside the container / on named volumes)
+qdrant_storage/
+*.db
+retrieval_snapshot.pkl
+hf_cache/
+*.log
+
+# Local env / secrets
+.env

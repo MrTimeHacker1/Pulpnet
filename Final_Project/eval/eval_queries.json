@@ -1,0 +1,31 @@
+{
+  "description": "Realistic IIT Kanpur student questions for reference-free RAGAS evaluation. No gold answers.",
+  "queries": [
+    "What does the course CE212 cover?",
+    "How many credits is CS340?",
+    "What are the prerequisites for CS345?",
+    "Tell me about machine learning courses offered by the CSE department.",
+    "What is the syllabus of AE311 Compressible Aerodynamics?",
+    "Which electrical engineering courses deal with signals and systems?",
+    "What topics are covered in the BSBE physiology and anatomy course?",
+    "What is the credit structure (L-T-P) for CE441M?",
+    "List some structural engineering courses in Civil Engineering.",
+    "What is covered in the design and analysis of algorithms course?",
+    "What are the minimum academic requirements to continue in a UG programme?",
+    "How is the CPI computed at IIT Kanpur?",
+    "What is the policy for graduating with distinction?",
+    "What are the rules for withdrawal from a programme?",
+    "How many credits are required to complete a minor?",
+    "What is the procedure for course registration and adding/dropping courses?",
+    "What are the different types of courses in the UG curriculum?",
+    "What is the maximum duration allowed to complete a B.Tech programme?",
+    "Explain the academic probation rules.",
+    "What is the policy on audit courses?",
+    "When does CS340 meet during the week?",
+    "What is the lecture schedule for AE209?",
+    "Which slot is the course CS771 scheduled in?",
+    "Who teaches the introduction to aerospace engineering course and when?",
+    "What time are the Thursday classes for EE301?",
+    "What is the timetable for CS601?"
+  ]
+}
