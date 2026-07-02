@@ -81,6 +81,8 @@ class EvalScore(Base):
     faithfulness: Mapped[float | None] = mapped_column(Float, nullable=True)
     answer_relevancy: Mapped[float | None] = mapped_column(Float, nullable=True)
     context_relevancy: Mapped[float | None] = mapped_column(Float, nullable=True)
+    context_precision: Mapped[float | None] = mapped_column(Float, nullable=True)
+    on_topic: Mapped[float | None] = mapped_column(Float, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=_utcnow)
 
     query_log: Mapped["QueryLog"] = relationship(back_populates="scores")

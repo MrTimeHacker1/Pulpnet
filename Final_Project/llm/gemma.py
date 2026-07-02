@@ -113,12 +113,21 @@ _llm: LLM | None = None
 
 
 def get_llm() -> LLM:
-    """Process-singleton accessor. Honors GENERATOR_MODEL=mock for offline runs."""
+    """Process-singleton accessor. Honors GENERATOR_MODEL env var.
+
+    Values: "mock" → MockLLM (offline/tests), "hf" → HFRouterLLM (hosted),
+    anything else → GemmaLLM (local checkpoint).
+    """
     global _llm
     if _llm is None:
-        if get_settings().generator_model.lower() == "mock":
+        model = get_settings().generator_model.lower()
+        if model == "mock":
             logger.warning("Using MockLLM (GENERATOR_MODEL=mock)")
             _llm = MockLLM()
+        elif model == "hf":
+            logger.info("Using HFRouterLLM (GENERATOR_MODEL=hf)")
+            from llm.hf_router import HFRouterLLM
+            _llm = HFRouterLLM()
         else:
             _llm = GemmaLLM()
     return _llm

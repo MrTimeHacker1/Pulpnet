@@ -66,7 +66,14 @@ class Settings(BaseSettings):
     # --- Models ---
     embed_model: str = Field(default="BAAI/bge-base-en-v1.5")
     reranker_model: str = Field(default="BAAI/bge-reranker-base")
+    # Valid values: a local HF checkpoint id, "mock" (offline tests), or "hf"
+    # (routes through HFRouterLLM — hosted inference, no local weights/GPU needed).
     generator_model: str = Field(default="google/gemma-4-E4B-it")
+    # Model id sent to the OpenAI-compatible router when generator_model="hf".
+    hf_model: str = Field(default="llama-3.3-70b-versatile")
+    # Base URL for the OpenAI-compatible inference endpoint. Switch providers by
+    # changing this: HF router, Groq, Together, etc.
+    hf_base_url: str = Field(default="https://router.huggingface.co/v1")
     model_device: str = Field(default="auto")
     embed_dim: int = Field(default=768)
 
@@ -80,6 +87,7 @@ class Settings(BaseSettings):
 
     # --- Misc ---
     log_level: str = Field(default="INFO")
+    # HF API token — required when generator_model="hf".
     hf_token: str | None = Field(default=None)
 
     def resolve_device(self) -> str:

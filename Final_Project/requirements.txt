@@ -29,6 +29,7 @@ langgraph==1.2.7
 langchain-core==1.4.8
 
 # --- LLM / models ---
+openai==1.82.1
 transformers==5.12.1
 # Stable torch with Python 3.13 wheels; satisfies transformers' torch>=2.4 floor.
 # (The dev box happened to have 2.12.1; 2.6.0 is the stable pin for clean builds.)
